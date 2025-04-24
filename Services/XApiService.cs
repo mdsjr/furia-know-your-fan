@@ -24,10 +24,11 @@ namespace FuriaKnowYourFan.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"https://api.x.com/2/tweets/search/recent?query={Uri.EscapeDataString(query)}");
+                var url = $"https://api.x.com/2/tweets/search/recent?query={Uri.EscapeDataString(query)}&tweet.fields=created_at";
+                var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 var json = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Resposta da API: {json}"); // Log para depuração
+                Console.WriteLine($"Resposta da API: {json}");
                 var tweets = JsonConvert.DeserializeObject<TweetResponse>(json);
                 return tweets?.Data ?? new List<Tweet>();
             }
@@ -37,6 +38,8 @@ namespace FuriaKnowYourFan.Services
                 return new List<Tweet>();
             }
         }
+
+
     }
 
     public class Tweet
