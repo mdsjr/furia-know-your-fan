@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using FuriaKnowYourFan.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,14 +13,18 @@ builder.Services.AddHttpClient<XApiService>(client =>
 }).AddTypedClient<XApiService>((httpClient, sp) =>
     new XApiService(httpClient, sp.GetRequiredService<IConfiguration>()));
 builder.Services.AddSingleton<FanAnalysisService>();
-builder.Services.AddOpenApi();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FURIA Know Your Fan API", Version = "v1" });
+});
 
 var app = builder.Build();
 
 // Configurar pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FURIA Know Your Fan API v1"));
 }
 
 app.UseHttpsRedirection();
