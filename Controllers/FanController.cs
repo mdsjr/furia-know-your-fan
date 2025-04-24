@@ -1,4 +1,3 @@
-// FuriaKnowYourFan/Controllers/FanController.cs
 using Microsoft.AspNetCore.Mvc;
 using FuriaKnowYourFan.Services;
 
@@ -20,7 +19,8 @@ namespace FuriaKnowYourFan.Controllers
         [HttpGet("analyze")]
         public async Task<AnalysisResult> Analyze()
         {
-            var tweets = await _xApiService.GetRecentTweetsAsync("%23FURIACS");
+            var tweets = await _xApiService.GetRecentTweetsAsync("#FURIACS lang:pt");
+            Console.WriteLine($"Tweets recebidos: {tweets?.Count ?? 0}");
             return _analysisService.AnalyzeTweets(tweets);
         }
     }

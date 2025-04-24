@@ -1,44 +1,31 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http.Headers;
 using FuriaKnowYourFan.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// Adicionar serviços
+builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddHttpClient<XApiService>(client =>
+{
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+}).AddTypedClient<XApiService>((httpClient, sp) =>
+    new XApiService(httpClient, sp.GetRequiredService<IConfiguration>()));
+builder.Services.AddSingleton<FanAnalysisService>();
 builder.Services.AddOpenApi();
-builder.Services.AddHttpClient<XApiService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configurar pipeline
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.UseStaticFiles();
+app.UseAuthorization();
+app.MapControllers();
+app.MapFallbackToFile("index.html");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
