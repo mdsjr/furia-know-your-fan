@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\furia-know-your-fan\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj": {}
+    "D:\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj": {}
   },
   "projects": {
-    "D:\\furia-know-your-fan\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj": {
+    "D:\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\furia-know-your-fan\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj",
+        "projectUniqueName": "D:\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj",
         "projectName": "FuriaKnowYourFan",
-        "projectPath": "D:\\furia-know-your-fan\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj",
+        "projectPath": "D:\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj",
         "packagesPath": "C:\\Users\\Junior\\.nuget\\packages\\",
-        "outputPath": "D:\\furia-know-your-fan\\FuriaKnowYourFan\\obj\\",
+        "outputPath": "D:\\FuriaKnowYourFan\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
