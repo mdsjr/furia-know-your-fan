@@ -34,6 +34,11 @@ namespace FuriaKnowYourFan.Services
             "a", "o", "na", "no", "como", "sobre"
         };
 
+        private readonly Dictionary<string, string> _wordNormalization = new Dictionary<string, string>
+        {
+            { "yek1ndar", "yekindar" }
+        };
+
         public AnalysisResult AnalyzeTweets(List<Tweet>? tweets)
         {
             var result = new AnalysisResult
@@ -59,6 +64,7 @@ namespace FuriaKnowYourFan.Services
                 {
                     var words = Regex.Split(tweet.Text.ToLower(), @"\W+")
                         .Where(w => w.Length > 2 && !string.IsNullOrWhiteSpace(w) && !_stopWords.Contains(w.ToLower()))
+                        .Select(w => _wordNormalization.ContainsKey(w) ? _wordNormalization[w] : w)
                         .ToList();
 
                     foreach (var word in words)
@@ -87,7 +93,8 @@ namespace FuriaKnowYourFan.Services
                 }
 
                 // Posts por dia
-                var date = tweet.CreatedAt.ToUniversalTime().Date;
+                var date = DateTime.Parse(tweet.CreatedAt).ToUniversalTime().Date;
+                Console.WriteLine($"Processando tweet com CreatedAt: {tweet.CreatedAt}, Date UTC: {date}");
                 var dateKey = date.ToString("o");
                 result.PostsByDay[dateKey] = result.PostsByDay.GetValueOrDefault(dateKey, 0) + 1;
             }
@@ -123,5 +130,12 @@ namespace FuriaKnowYourFan.Services
         public int Positive { get; set; }
         public int Negative { get; set; }
         public int Neutral { get; set; }
+    }
+
+    public class Tweet
+    {
+        public string Id { get; set; }
+        public string Text { get; set; }
+        public string CreatedAt { get; set; }
     }
 }

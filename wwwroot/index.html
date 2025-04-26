@@ -10,7 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-white">
-    <div id="root" class="p-4"></div>
+    <div id="root" className="p-4"></div>
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -48,6 +48,20 @@
                     setError(`Falha ao carregar dados: ${error.message}. Tente novamente.`);
                     setData(null);
                 }
+            };
+
+            const exportData = () => {
+                if (!data) return;
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'furia_analysis.json';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
             };
 
             useEffect(() => {
@@ -129,12 +143,27 @@
                         <img src="/images/furia-logo.png" alt="FURIA Logo" className="h-16 mr-4" />
                         <h1 className="text-3xl text-orange-500">FURIA Know Your Fan</h1>
                     </div>
-                    <button 
-                        onClick={fetchData} 
-                        className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
-                    >
-                        Atualizar Dados
-                    </button>
+                    <div className="flex space-x-4 mb-4">
+                        <button 
+                            onClick={fetchData} 
+                            className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
+                        >
+                            Atualizar Dados
+                        </button>
+                        <button 
+                            onClick={exportData} 
+                            className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
+                            disabled={!data}
+                        >
+                            Exportar Dados
+                        </button>
+                        <a 
+                            href="/profile.html" 
+                            className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
+                        >
+                            Editar Perfil
+                        </a>
+                    </div>
                     <div className="mt-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
@@ -150,7 +179,7 @@
                                         <div key={word} className="mt-2">
                                             <p className="font-bold">{word.toUpperCase()}</p>
                                             <ul className="list-disc pl-5">
-                                                {data.topWordsTweets[word].map((tweet, index) => (
+                                                {data.topWordsTweets[word].slice(0, 3).map((tweet, index) => (
                                                     <li key={index} className="text-sm">{tweet}</li>
                                                 ))}
                                             </ul>

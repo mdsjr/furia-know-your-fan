@@ -1,76 +1,60 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Configuration;
 
 namespace FuriaKnowYourFan.Services
 {
     public class XApiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _bearerToken;
 
-        public XApiService(HttpClient httpClient, IConfiguration configuration)
+        public XApiService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _bearerToken = configuration["XApiToken"] ?? throw new ArgumentNullException("XApiToken não configurado");
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _bearerToken);
+            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer YOUR_X_API_BEARER_TOKEN");
         }
 
-        public async Task<List<Tweet>?> GetRecentTweetsAsync(string query)
+        public async Task<List<Tweet>> GetRecentTweetsAsync(string query)
         {
-            const int maxRetries = 3;
-            int retryCount = 0;
-            int delayMs = 1000; // Início com 1 segundo
-
-            while (retryCount < maxRetries)
+            try
             {
-                try
+                var url = $"https://api.x.com/2/tweets/search/recent?query={Uri.EscapeDataString(query)}&max_results=10&tweet.fields=created_at";
+                var response = await _httpClient.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                var json = await response.Content.ReadAsStringAsync();
+                var jsonDoc = JsonDocument.Parse(json);
+
+                var tweets = new List<Tweet>();
+                if (jsonDoc.RootElement.TryGetProperty("data", out var data))
                 {
-                    var url = $"https://api.x.com/2/tweets/search/recent?query={Uri.EscapeDataString(query)}&tweet.fields=created_at";
-                    var response = await _httpClient.GetAsync(url);
-                    response.EnsureSuccessStatusCode();
-                    var json = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine($"Resposta da API: {json}");
-                    var tweets = JsonConvert.DeserializeObject<TweetResponse>(json);
-                    return tweets?.Data ?? new List<Tweet>();
-                }
-                catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
-                {
-                    retryCount++;
-                    if (retryCount >= maxRetries)
+                    foreach (var tweetElement in data.EnumerateArray())
                     {
-                        Console.WriteLine("Máximo de tentativas atingido para API do X (429).");
-                        return new List<Tweet>();
+                        tweets.Add(new Tweet
+                        {
+                            Id = tweetElement.GetProperty("id").GetString(),
+                            Text = tweetElement.GetProperty("text").GetString(),
+                            CreatedAt = tweetElement.GetProperty("created_at").GetString()
+                        });
                     }
-                    Console.WriteLine($"Erro 429: Aguardando {delayMs}ms antes de tentar novamente...");
-                    await Task.Delay(delayMs);
-                    delayMs *= 2; // Aumenta o delay exponencialmente
                 }
-                catch (HttpRequestException ex)
-                {
-                    Console.WriteLine($"Erro na API do X: {ex.Message}");
-                    return new List<Tweet>();
-                }
+
+                Console.WriteLine($"Resposta da API: {json}");
+                return tweets;
             }
-            return new List<Tweet>();
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
+                throw;
+            }
         }
     }
 
     public class Tweet
     {
-        public string? Id { get; set; }
-        public string? Text { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        [JsonProperty("edit_history_tweet_ids")]
-        public List<string>? EditHistoryTweetIds { get; set; }
-    }
-
-    public class TweetResponse
-    {
-        public List<Tweet>? Data { get; set; }
+        public string Id { get; set; }
+        public string Text { get; set; }
+        public string CreatedAt { get; set; }
     }
 }

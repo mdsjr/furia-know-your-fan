@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>FURIA Know Your Fan - Perfil</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+    <div id="root" class="p-4"></div>
+    <script type="text/babel">
+        const { useState } = React;
+
+        const Profile = () => {
+            const [formData, setFormData] = useState({
+                name: '',
+                address: '',
+                cpf: '',
+                interests: '',
+                events: '',
+                purchases: '',
+                xHandle: ''
+            });
+            const [file, setFile] = useState(null);
+            const [validationMessage, setValidationMessage] = useState('');
+            const [profileValidation, setProfileValidation] = useState('');
+
+            const handleInputChange = (e) => {
+                setFormData({ ...formData, [e.target.name]: e.target.value });
+            };
+
+            const handleFileChange = (e) => {
+                const selectedFile = e.target.files[0];
+                if (selectedFile && ['image/png', 'image/jpeg', 'application/pdf'].includes(selectedFile.type)) {
+                    setFile(selectedFile);
+                    setValidationMessage('Documento válido! (Simulação de validação com IA)');
+                } else {
+                    setFile(null);
+                    setValidationMessage('Por favor, envie um arquivo PNG, JPEG ou PDF.');
+                }
+            };
+
+            const validateProfile = async () => {
+                if (!formData.xHandle) {
+                    setProfileValidation('Por favor, insira seu handle do X.');
+                    return;
+                }
+                try {
+                    const handle = formData.xHandle.startsWith('@') ? formData.xHandle.substring(1) : formData.xHandle;
+                    const res = await fetch(`/api/profile/validate/${handle}`);
+                    const json = await res.json();
+                    setProfileValidation(json.message);
+                } catch (error) {
+                    setProfileValidation(`Erro ao validar perfil: ${error.message}`);
+                }
+            };
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                console.log('Dados do formulário:', formData);
+                console.log('Arquivo enviado:', file);
+                alert('Perfil salvo com sucesso! (Simulação de salvamento)');
+            };
+
+            return (
+                <div className="max-w-4xl mx-auto">
+                    <div className="flex items-center mb-4">
+                        <img src="/images/furia-logo.png" alt="FURIA Logo" className="h-16 mr-4" />
+                        <h1 className="text-3xl text-orange-500">FURIA Know Your Fan - Perfil</h1>
+                    </div>
+                    <a href="/index.html" className="text-orange-500 hover:underline">Voltar para Análise</a>
+                    <form onSubmit={handleSubmit} className="mt-4">
+                        <div className="mb-4">
+                            <label className="block text-lg">Nome</label>
+                            <input
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Endereço</label>
+                            <input
+                                type="text"
+                                name="address"
+                                value={formData.address}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">CPF</label>
+                            <input
+                                type="text"
+                                name="cpf"
+                                value={formData.cpf}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                required
+                            />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Interesses (ex.: jogos, times)</label>
+                            <textarea
+                                name="interests"
+                                value={formData.interests}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Eventos (ex.: campeonatos assistidos)</label>
+                            <textarea
+                                name="events"
+                                value={formData.events}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Compras (ex.: produtos da FURIA)</label>
+                            <textarea
+                                name="purchases"
+                                value={formData.purchases}
+                                onChange={handleInputChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                rows="4"
+                            ></textarea>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Handle do X (ex.: @moacir)</label>
+                            <div className="flex space-x-2">
+                                <input
+                                    type="text"
+                                    name="xHandle"
+                                    value={formData.xHandle}
+                                    onChange={handleInputChange}
+                                    className="w-full p-2 bg-gray-800 text-white rounded"
+                                    placeholder="@seuhandle"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={validateProfile}
+                                    className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
+                                >
+                                    Validar
+                                </button>
+                            </div>
+                            {profileValidation && (
+                                <p className={profileValidation.includes('válido') ? 'text-green-500' : 'text-red-500'}>
+                                    {profileValidation}
+                                </p>
+                            )}
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-lg">Upload de Documento (PNG, JPEG, PDF)</label>
+                            <input
+                                type="file"
+                                onChange={handleFileChange}
+                                className="w-full p-2 bg-gray-800 text-white rounded"
+                                accept="image/png,image/jpeg,application/pdf"
+                            />
+                            {validationMessage && (
+                                <p className={validationMessage.includes('válido') ? 'text-green-500' : 'text-red-500'}>
+                                    {validationMessage}
+                                </p>
+                            )}
+                        </div>
+                        <button
+                            type="submit"
+                            className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
+                        >
+                            Salvar Perfil
+                        </button>
+                    </form>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<Profile />, document.getElementById('root'));
+    </script>
+</body>
+</html>
