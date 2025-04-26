@@ -37,7 +37,7 @@ D:\FuriaKnowYourFan\obj\Debug\net9.0\FuriaKnowYourFan.pdb
 D:\FuriaKnowYourFan\obj\Debug\net9.0\FuriaKnowYourFan.genruntimeconfig.cache
 D:\FuriaKnowYourFan\obj\Debug\net9.0\ref\FuriaKnowYourFan.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\FuriaKnowYourFan.staticwebassets.runtime.json
-D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-23799787hv.gz
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-8pyryv7ukp.gz

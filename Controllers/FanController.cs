@@ -21,25 +21,53 @@ namespace FuriaKnowYourFan.Controllers
         }
 
         [HttpGet("analyze")]
-        public async Task<AnalysisResult> Analyze()
+        public async Task<IActionResult> Analyze()
         {
-            // Verificar cache
-            if (_cachedResult != null && DateTime.UtcNow < _cacheExpiry)
+            if (_cachedResult != null && DateTime.UtcNow < _cacheExpiry && _cachedResult.TopWords.Any())
             {
                 Console.WriteLine("Retornando resultado do cache.");
-                return _cachedResult;
+                return Ok(_cachedResult);
             }
 
-            // Obter tweets e analisar
-            var tweets = await _xApiService.GetRecentTweetsAsync("#FURIACS lang:pt");
-            Console.WriteLine($"Tweets recebidos: {tweets?.Count ?? 0}");
-            var result = _analysisService.AnalyzeTweets(tweets);
+            try
+            {
+                var tweets = await _xApiService.GetRecentTweetsAsync("#FURIACS lang:pt");
+                Console.WriteLine($"Tweets recebidos: {tweets?.Count ?? 0}");
+                var result = _analysisService.AnalyzeTweets(tweets);
 
-            // Armazenar no cache por 5 minutos
-            _cachedResult = result;
-            _cacheExpiry = DateTime.UtcNow.AddMinutes(5);
-
-            return result;
+                if (tweets != null && tweets.Any() && result.TopWords.Any())
+                {
+                    _cachedResult = result;
+                    _cacheExpiry = DateTime.UtcNow.AddMinutes(5);
+                    Console.WriteLine("Cache atualizado com novo resultado.");
+                    return Ok(result);
+                }
+                else if (_cachedResult != null && _cachedResult.TopWords.Any())
+                {
+                    Console.WriteLine("Retornando cache devido a tweets inválidos.");
+                    return Ok(_cachedResult);
+                }
+                else
+                {
+                    Console.WriteLine("Nenhum dado válido disponível.");
+                    return Ok(new AnalysisResult
+                    {
+                        TopWords = new Dictionary<string, int>(),
+                        Sentiment = new Sentiment { Positive = 0, Negative = 0, Neutral = 0 },
+                        PostsByDay = new Dictionary<string, int>()
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
+                if (_cachedResult != null && _cachedResult.TopWords.Any())
+                {
+                    Console.WriteLine("Retornando cache devido a erro na API.");
+                    return Ok(_cachedResult);
+                }
+                return StatusCode(500, "Erro ao processar a solicitação.");
+            }
         }
     }
 }

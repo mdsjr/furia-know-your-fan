@@ -19,15 +19,31 @@
 
             const fetchData = async () => {
                 try {
-                    const res = await fetch('/api/fan/analyze');
-                    if (!res.ok) throw new Error('Erro na API');
+                    const res = await fetch('/api/fan/analyze', {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    console.log('Status da requisição:', res.status, res.statusText);
+                    if (!res.ok) {
+                        const errorText = await res.text();
+                        throw new Error(`Erro na API: ${res.status} ${res.statusText} - ${errorText}`);
+                    }
                     const json = await res.json();
-                    setData(json);
-                    setError(null);
+                    console.log('Resposta da API:', json);
+                    console.log('Top Words:', json.topWords);
+                    console.log('Posts by Day:', json.postsByDay);
+                    if (json && json.topWords && Object.keys(json.topWords).length > 0 && json.sentiment && json.postsByDay) {
+                        setData(json);
+                        setError(null);
+                    } else {
+                        throw new Error('Dados inválidos recebidos da API');
+                    }
                 } catch (error) {
                     console.error('Erro ao buscar dados:', error);
-                    setError('Falha ao carregar dados. Tente novamente.');
-                    setData({ topWords: {}, sentiment: { positive: 0, negative: 0, neutral: 0 }, postsByDay: {} });
+                    setError(`Falha ao carregar dados: ${error.message}. Tente novamente.`);
+                    setData(null);
                 }
             };
 
@@ -36,36 +52,68 @@
             }, []);
 
             useEffect(() => {
-                if (data) {
-                    new Chart(document.getElementById('wordsChart'), {
-                        type: 'bar',
+                if (!data) return;
+
+                const wordsChartCanvas = document.getElementById('wordsChart');
+                const postsChartCanvas = document.getElementById('postsChart');
+                if (!wordsChartCanvas || !postsChartCanvas) {
+                    console.error('Canvas não encontrado:', { wordsChartCanvas, postsChartCanvas });
+                    return;
+                }
+
+                // Destruir gráficos existentes
+                const existingWordsChart = Chart.getChart(wordsChartCanvas);
+                const existingPostsChart = Chart.getChart(postsChartCanvas);
+                if (existingWordsChart) existingWordsChart.destroy();
+                if (existingPostsChart) existingPostsChart.destroy();
+
+                // Gráfico de Top Palavras
+                console.log('Criando gráfico de Top Palavras com dados:', data.topWords);
+                new Chart(wordsChartCanvas, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(data.topWords),
+                        datasets: [{
+                            label: 'Frequência',
+                            data: Object.values(data.topWords),
+                            backgroundColor: '#f97316'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        scales: {
+                            y: { beginAtZero: true }
+                        }
+                    }
+                });
+
+                // Gráfico de Posts por Dia
+                console.log('Criando gráfico de Posts por Dia com dados:', data.postsByDay);
+                const postsByDayKeys = Object.keys(data.postsByDay);
+                if (postsByDayKeys.length > 0) {
+                    new Chart(postsChartCanvas, {
+                        type: 'line',
                         data: {
-                            labels: Object.keys(data.topWords || {}),
+                            labels: postsByDayKeys.map(d => new Date(d).toLocaleDateString('pt-BR')),
                             datasets: [{
-                                label: 'Frequência',
-                                data: Object.values(data.topWords || {}),
-                                backgroundColor: '#f97316'
+                                label: 'Posts',
+                                data: Object.values(data.postsByDay),
+                                borderColor: '#f97316',
+                                fill: false,
+                                tension: 0.1
                             }]
                         },
                         options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
                             scales: {
                                 y: { beginAtZero: true }
                             }
                         }
                     });
-
-                    new Chart(document.getElementById('postsChart'), {
-                        type: 'line',
-                        data: {
-                            labels: Object.keys(data.postsByDay || {}).map(d => new Date(d).toLocaleDateString()),
-                            datasets: [{
-                                label: 'Posts',
-                                data: Object.values(data.postsByDay || {}),
-                                borderColor: '#f97316',
-                                fill: false
-                            }]
-                        }
-                    });
+                } else {
+                    console.warn('Nenhum dado disponível para o gráfico de Posts por Dia');
                 }
             }, [data]);
 
@@ -82,13 +130,17 @@
                         Atualizar Dados
                     </button>
                     <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div>
+                        <div className="h-[400px]">
                             <h2 className="text-xl">Top Palavras</h2>
-                            <canvas id="wordsChart"></canvas>
+                            <div className="relative w-full h-full">
+                                <canvas id="wordsChart"></canvas>
+                            </div>
                         </div>
-                        <div>
+                        <div className="h-[400px]">
                             <h2 className="text-xl">Posts por Dia</h2>
-                            <canvas id="postsChart"></canvas>
+                            <div className="relative w-full h-full">
+                                <canvas id="postsChart"></canvas>
+                            </div>
                         </div>
                         <div>
                             <h2 className="text-xl">Sentimento</h2>
