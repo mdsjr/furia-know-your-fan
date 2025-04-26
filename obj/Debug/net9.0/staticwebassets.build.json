@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "G9ZYmNGbe9nbR+njmF08ebrvbluEeIfMI5rX10S3xfA=",
+  "Hash": "bXHq65bzo9qo1Psbzl42L7OdNgUZ5+4Q48auR38vEwM=",
   "Source": "FuriaKnowYourFan",
   "BasePath": "_content/FuriaKnowYourFan",
   "Mode": "Default",
@@ -17,12 +17,12 @@
   ],
   "Assets": [
     {
-      "Identity": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-8pyryv7ukp.gz",
+      "Identity": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-zjcym4nk1t.gz",
       "SourceId": "FuriaKnowYourFan",
       "SourceType": "Discovered",
       "ContentRoot": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/FuriaKnowYourFan",
-      "RelativePath": "index#[.{fingerprint=8pyryv7ukp}]?.html.gz",
+      "RelativePath": "index#[.{fingerprint=zjcym4nk1t}]?.html.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -31,11 +31,32 @@
       "RelatedAsset": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "x32t6y2fzm",
-      "Integrity": "E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M=",
+      "Fingerprint": "lfdvyfwbqo",
+      "Integrity": "P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "D:\\FuriaKnowYourFan\\wwwroot\\index.html"
+    },
+    {
+      "Identity": "D:\\FuriaKnowYourFan\\wwwroot\\images\\furia-logo.png",
+      "SourceId": "FuriaKnowYourFan",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\FuriaKnowYourFan\\wwwroot\\",
+      "BasePath": "_content/FuriaKnowYourFan",
+      "RelativePath": "images/furia-logo#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "f77r1hs6ou",
+      "Integrity": "OyJN1I5GII1bSHf2RcusyuZgftqollKrRmS3XZqnqY0=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\furia-logo.png"
     },
     {
       "Identity": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
@@ -52,8 +73,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "8pyryv7ukp",
-      "Integrity": "lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y=",
+      "Fingerprint": "zjcym4nk1t",
+      "Integrity": "D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\index.html"
@@ -61,13 +82,95 @@
   ],
   "Endpoints": [
     {
-      "Route": "index.8pyryv7ukp.html",
-      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-8pyryv7ukp.gz",
+      "Route": "images/furia-logo.f77r1hs6ou.png",
+      "AssetFile": "D:\\FuriaKnowYourFan\\wwwroot\\images\\furia-logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20293"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OyJN1I5GII1bSHf2RcusyuZgftqollKrRmS3XZqnqY0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 26 Apr 2025 01:22:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f77r1hs6ou"
+        },
+        {
+          "Name": "label",
+          "Value": "images/furia-logo.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OyJN1I5GII1bSHf2RcusyuZgftqollKrRmS3XZqnqY0="
+        }
+      ]
+    },
+    {
+      "Route": "images/furia-logo.png",
+      "AssetFile": "D:\\FuriaKnowYourFan\\wwwroot\\images\\furia-logo.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "20293"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OyJN1I5GII1bSHf2RcusyuZgftqollKrRmS3XZqnqY0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 26 Apr 2025 01:22:11 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OyJN1I5GII1bSHf2RcusyuZgftqollKrRmS3XZqnqY0="
+        }
+      ]
+    },
+    {
+      "Route": "index.html",
+      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-zjcym4nk1t.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000544069641"
+          "Quality": "0.000471031559"
         }
       ],
       "ResponseHeaders": [
@@ -77,19 +180,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1837"
+          "Value": "2122"
         },
         {
           "Name": "ETag",
-          "Value": "\"E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M=\""
+          "Value": "\"P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -105,26 +208,18 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y=\""
+          "Value": "W/\"D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ=\""
         }
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "8pyryv7ukp"
-        },
-        {
-          "Name": "label",
-          "Value": "index.html"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y="
+          "Value": "sha256-D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ="
         }
       ]
     },
     {
-      "Route": "index.8pyryv7ukp.html",
+      "Route": "index.html",
       "AssetFile": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
       "Selectors": [],
       "ResponseHeaders": [
@@ -134,7 +229,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "7218"
+          "Value": "8796"
         },
         {
           "Name": "Content-Type",
@@ -142,11 +237,156 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y=\""
+          "Value": "\"D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ="
+        }
+      ]
+    },
+    {
+      "Route": "index.html.gz",
+      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-zjcym4nk1t.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2122"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic="
+        }
+      ]
+    },
+    {
+      "Route": "index.zjcym4nk1t.html",
+      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-zjcym4nk1t.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000471031559"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2122"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zjcym4nk1t"
+        },
+        {
+          "Name": "label",
+          "Value": "index.html"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ="
+        }
+      ]
+    },
+    {
+      "Route": "index.zjcym4nk1t.html",
+      "AssetFile": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8796"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/html"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -156,7 +396,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "8pyryv7ukp"
+          "Value": "zjcym4nk1t"
         },
         {
           "Name": "label",
@@ -164,13 +404,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y="
+          "Value": "sha256-D0pDTtGyPKR7uD9x0OVtnWti8d1kpPEw8wljr/HtvYQ="
         }
       ]
     },
     {
-      "Route": "index.8pyryv7ukp.html.gz",
-      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-8pyryv7ukp.gz",
+      "Route": "index.zjcym4nk1t.html.gz",
+      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-zjcym4nk1t.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -179,7 +419,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1837"
+          "Value": "2122"
         },
         {
           "Name": "Content-Type",
@@ -187,11 +427,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M=\""
+          "Value": "\"P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
+          "Value": "Sat, 26 Apr 2025 01:57:26 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -209,7 +449,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "8pyryv7ukp"
+          "Value": "zjcym4nk1t"
         },
         {
           "Name": "label",
@@ -217,144 +457,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M="
-        }
-      ]
-    },
-    {
-      "Route": "index.html",
-      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-8pyryv7ukp.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000544069641"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1837"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y="
-        }
-      ]
-    },
-    {
-      "Route": "index.html",
-      "AssetFile": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "7218"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-lOl9omi35ajJm9+uigcCU9JsEgEbZq8ThsIX9Qfg08Y="
-        }
-      ]
-    },
-    {
-      "Route": "index.html.gz",
-      "AssetFile": "D:\\FuriaKnowYourFan\\obj\\Debug\\net9.0\\compressed\\gkizq7eouw-8pyryv7ukp.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1837"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/html"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 26 Apr 2025 00:50:10 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-E+LoHngpp3PFzVPupgJHxfOPSuT62PoBXD5rsrtsE9M="
+          "Value": "sha256-P+x5+W7YRe3FK5NsljUT2umejhwG0iohyqR9gR7ABic="
         }
       ]
     }

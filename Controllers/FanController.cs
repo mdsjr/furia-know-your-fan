@@ -23,7 +23,7 @@ namespace FuriaKnowYourFan.Controllers
         [HttpGet("analyze")]
         public async Task<IActionResult> Analyze()
         {
-            if (_cachedResult != null && DateTime.UtcNow < _cacheExpiry && _cachedResult.TopWords.Any())
+            if (_cachedResult != null && DateTime.UtcNow < _cacheExpiry && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
             {
                 Console.WriteLine("Retornando resultado do cache.");
                 return Ok(_cachedResult);
@@ -35,14 +35,14 @@ namespace FuriaKnowYourFan.Controllers
                 Console.WriteLine($"Tweets recebidos: {tweets?.Count ?? 0}");
                 var result = _analysisService.AnalyzeTweets(tweets);
 
-                if (tweets != null && tweets.Any() && result.TopWords.Any())
+                if (tweets != null && tweets.Any() && result.TopWords.Any() && result.PostsByDay.Any())
                 {
                     _cachedResult = result;
                     _cacheExpiry = DateTime.UtcNow.AddMinutes(5);
                     Console.WriteLine("Cache atualizado com novo resultado.");
                     return Ok(result);
                 }
-                else if (_cachedResult != null && _cachedResult.TopWords.Any())
+                else if (_cachedResult != null && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
                 {
                     Console.WriteLine("Retornando cache devido a tweets inválidos.");
                     return Ok(_cachedResult);
@@ -54,14 +54,15 @@ namespace FuriaKnowYourFan.Controllers
                     {
                         TopWords = new Dictionary<string, int>(),
                         Sentiment = new Sentiment { Positive = 0, Negative = 0, Neutral = 0 },
-                        PostsByDay = new Dictionary<string, int>()
+                        PostsByDay = new Dictionary<string, int>(),
+                        TopWordsTweets = new Dictionary<string, List<string>>()
                     });
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
-                if (_cachedResult != null && _cachedResult.TopWords.Any())
+                if (_cachedResult != null && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
                 {
                     Console.WriteLine("Retornando cache devido a erro na API.");
                     return Ok(_cachedResult);

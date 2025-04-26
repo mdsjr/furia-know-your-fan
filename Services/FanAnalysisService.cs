@@ -7,8 +7,32 @@ namespace FuriaKnowYourFan.Services
 {
     public class FanAnalysisService
     {
-        private readonly List<string> _positiveWords = new List<string> { "ótimo", "excelente", "fantástico", "incrível", "maravilhoso", "bom", "vitoria", "campeão", "prontos", "vamo" };
-        private readonly List<string> _negativeWords = new List<string> { "ruim", "terrível", "péssimo", "derrota", "fraco", "decepção" };
+        private readonly List<string> _positiveWords = new List<string>
+        {
+            "vitória", "venceu", "foda", "pantera", "monstro", "brabo", "cravou",
+            "lendário", "mestre", "campeão", "ownou", "mitou", "arrebentou",
+            "insano", "god", "jogaço", "clutch", "hype", "orgulho", "raiz", "vamo"
+        };
+
+        private readonly List<string> _negativeWords = new List<string>
+        {
+            "derrota", "perdeu", "ruim", "fraco", "decepção", "vexame",
+            "afundou", "tiltou", "choke", "errou", "pipoqueiro", "fracassou",
+            "vergonha", "desastre", "lento", "noob"
+        };
+
+        private readonly List<string> _neutralWords = new List<string>
+        {
+            "jogo", "partida", "competição", "torneio", "disputa", "placar",
+            "treino", "estratégia", "elenco", "time", "jogador", "furia",
+            "esports", "campeonato"
+        };
+
+        private readonly List<string> _stopWords = new List<string>
+        {
+            "https", "http", "t.co", "rt", "pra", "que", "com", "por", "em", "de", "e",
+            "a", "o", "na", "no", "como", "sobre"
+        };
 
         public AnalysisResult AnalyzeTweets(List<Tweet>? tweets)
         {
@@ -16,7 +40,8 @@ namespace FuriaKnowYourFan.Services
             {
                 TopWords = new Dictionary<string, int>(),
                 Sentiment = new Sentiment { Positive = 0, Negative = 0, Neutral = 0 },
-                PostsByDay = new Dictionary<string, int>()
+                PostsByDay = new Dictionary<string, int>(),
+                TopWordsTweets = new Dictionary<string, List<string>>()
             };
 
             if (tweets == null || !tweets.Any())
@@ -25,6 +50,7 @@ namespace FuriaKnowYourFan.Services
             }
 
             var wordCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+            var wordTweets = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var tweet in tweets)
             {
@@ -32,12 +58,20 @@ namespace FuriaKnowYourFan.Services
                 if (!string.IsNullOrEmpty(tweet.Text))
                 {
                     var words = Regex.Split(tweet.Text.ToLower(), @"\W+")
-                        .Where(w => w.Length > 2 && !string.IsNullOrWhiteSpace(w))
+                        .Where(w => w.Length > 2 && !string.IsNullOrWhiteSpace(w) && !_stopWords.Contains(w.ToLower()))
                         .ToList();
 
                     foreach (var word in words)
                     {
                         wordCounts[word] = wordCounts.GetValueOrDefault(word, 0) + 1;
+                        if (!wordTweets.ContainsKey(word))
+                        {
+                            wordTweets[word] = new List<string>();
+                        }
+                        if (!wordTweets[word].Contains(tweet.Text))
+                        {
+                            wordTweets[word].Add(tweet.Text);
+                        }
                     }
 
                     // Análise de sentimento
@@ -53,8 +87,8 @@ namespace FuriaKnowYourFan.Services
                 }
 
                 // Posts por dia
-                var date = tweet.CreatedAt.Date; // Usa a data local sem fuso horário
-                var dateKey = date.ToString("o"); // Formato ISO 8601
+                var date = tweet.CreatedAt.ToUniversalTime().Date;
+                var dateKey = date.ToString("o");
                 result.PostsByDay[dateKey] = result.PostsByDay.GetValueOrDefault(dateKey, 0) + 1;
             }
 
@@ -62,6 +96,15 @@ namespace FuriaKnowYourFan.Services
             result.TopWords = wordCounts.OrderByDescending(w => w.Value)
                 .Take(5)
                 .ToDictionary(w => w.Key, w => w.Value);
+
+            // Mapear tweets para as top palavras
+            foreach (var topWord in result.TopWords.Keys)
+            {
+                if (wordTweets.ContainsKey(topWord))
+                {
+                    result.TopWordsTweets[topWord] = wordTweets[topWord];
+                }
+            }
 
             return result;
         }
@@ -72,6 +115,7 @@ namespace FuriaKnowYourFan.Services
         public Dictionary<string, int> TopWords { get; set; } = new Dictionary<string, int>();
         public Sentiment Sentiment { get; set; } = new Sentiment();
         public Dictionary<string, int> PostsByDay { get; set; } = new Dictionary<string, int>();
+        public Dictionary<string, List<string>> TopWordsTweets { get; set; } = new Dictionary<string, List<string>>();
     }
 
     public class Sentiment

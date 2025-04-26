@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>FURIA Know Your Fan</title>
     <script src="https://cdn.jsdelivr.net/npm/react@18/umd/react.development.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js"></script>
@@ -34,7 +35,9 @@
                     console.log('Resposta da API:', json);
                     console.log('Top Words:', json.topWords);
                     console.log('Posts by Day:', json.postsByDay);
-                    if (json && json.topWords && Object.keys(json.topWords).length > 0 && json.sentiment && json.postsByDay) {
+                    console.log('Sentiment:', json.sentiment);
+                    console.log('Top Words Tweets:', json.topWordsTweets);
+                    if (json && json.topWords && json.sentiment && json.postsByDay) {
                         setData(json);
                         setError(null);
                     } else {
@@ -122,27 +125,49 @@
 
             return (
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-3xl text-orange-500 mb-4">FURIA Know Your Fan</h1>
+                    <div className="flex items-center mb-4">
+                        <img src="/images/furia-logo.png" alt="FURIA Logo" className="h-16 mr-4" />
+                        <h1 className="text-3xl text-orange-500">FURIA Know Your Fan</h1>
+                    </div>
                     <button 
                         onClick={fetchData} 
                         className="bg-orange-500 text-black px-4 py-2 rounded hover:bg-orange-600"
                     >
                         Atualizar Dados
                     </button>
-                    <div className="grid grid-cols-2 gap-4 mt-4">
-                        <div className="h-[400px]">
-                            <h2 className="text-xl">Top Palavras</h2>
-                            <div className="relative w-full h-full">
-                                <canvas id="wordsChart"></canvas>
+                    <div className="mt-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <h2 className="text-xl">Top Palavras</h2>
+                                <div className="h-[400px]">
+                                    <div className="relative w-full h-full">
+                                        <canvas id="wordsChart"></canvas>
+                                    </div>
+                                </div>
+                                <div className="mt-4">
+                                    <h3 className="text-lg">Tweets com as Top Palavras</h3>
+                                    {data.topWordsTweets && Object.keys(data.topWordsTweets).map(word => (
+                                        <div key={word} className="mt-2">
+                                            <p className="font-bold">{word.toUpperCase()}</p>
+                                            <ul className="list-disc pl-5">
+                                                {data.topWordsTweets[word].map((tweet, index) => (
+                                                    <li key={index} className="text-sm">{tweet}</li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <h2 className="text-xl">Posts por Dia</h2>
+                                <div className="h-[400px]">
+                                    <div className="relative w-full h-full">
+                                        <canvas id="postsChart"></canvas>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="h-[400px]">
-                            <h2 className="text-xl">Posts por Dia</h2>
-                            <div className="relative w-full h-full">
-                                <canvas id="postsChart"></canvas>
-                            </div>
-                        </div>
-                        <div>
+                        <div className="mt-4">
                             <h2 className="text-xl">Sentimento</h2>
                             <p>Positivo: {data.sentiment?.positive ?? 0}</p>
                             <p>Negativo: {data.sentiment?.negative ?? 0}</p>

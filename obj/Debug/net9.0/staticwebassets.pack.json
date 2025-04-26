@@ -1,6 +1,10 @@
 {
   "Files": [
     {
+      "Id": "D:\\FuriaKnowYourFan\\wwwroot\\images\\furia-logo.png",
+      "PackagePath": "staticwebassets\\images\\furia-logo.png"
+    },
+    {
       "Id": "D:\\FuriaKnowYourFan\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
