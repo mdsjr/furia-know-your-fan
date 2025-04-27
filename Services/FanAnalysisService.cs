@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using FuriaKnowYourFan.Models;
 
 namespace FuriaKnowYourFan.Services
 {
@@ -93,10 +94,13 @@ namespace FuriaKnowYourFan.Services
                 }
 
                 // Posts por dia
-                var date = DateTime.Parse(tweet.CreatedAt).ToUniversalTime().Date;
-                Console.WriteLine($"Processando tweet com CreatedAt: {tweet.CreatedAt}, Date UTC: {date}");
-                var dateKey = date.ToString("o");
-                result.PostsByDay[dateKey] = result.PostsByDay.GetValueOrDefault(dateKey, 0) + 1;
+                if (!string.IsNullOrEmpty(tweet.CreatedAt))
+                {
+                    var date = DateTime.Parse(tweet.CreatedAt).ToUniversalTime().Date;
+                    Console.WriteLine($"Processando tweet com CreatedAt: {tweet.CreatedAt}, Date UTC: {date}");
+                    var dateKey = date.ToString("o");
+                    result.PostsByDay[dateKey] = result.PostsByDay.GetValueOrDefault(dateKey, 0) + 1;
+                }
             }
 
             // Selecionar top 5 palavras
@@ -130,12 +134,5 @@ namespace FuriaKnowYourFan.Services
         public int Positive { get; set; }
         public int Negative { get; set; }
         public int Neutral { get; set; }
-    }
-
-    public class Tweet
-    {
-        public string Id { get; set; }
-        public string Text { get; set; }
-        public string CreatedAt { get; set; }
     }
 }

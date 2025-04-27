@@ -10,64 +10,37 @@ namespace FuriaKnowYourFan.Controllers
     public class FanController : ControllerBase
     {
         private readonly XApiService _xApiService;
-        private readonly FanAnalysisService _analysisService;
-        private static AnalysisResult? _cachedResult;
-        private static DateTime _cacheExpiry = DateTime.MinValue;
+        private readonly FanAnalysisService _fanAnalysisService;
 
-        public FanController(XApiService xApiService, FanAnalysisService analysisService)
+        public FanController(XApiService xApiService, FanAnalysisService fanAnalysisService)
         {
-            _xApiService = xApiService;
-            _analysisService = analysisService;
+            _xApiService = xApiService ?? throw new ArgumentNullException(nameof(xApiService));
+            _fanAnalysisService = fanAnalysisService ?? throw new ArgumentNullException(nameof(fanAnalysisService));
         }
 
         [HttpGet("analyze")]
         public async Task<IActionResult> Analyze()
         {
-            if (_cachedResult != null && DateTime.UtcNow < _cacheExpiry && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
-            {
-                Console.WriteLine("Retornando resultado do cache.");
-                return Ok(_cachedResult);
-            }
-
             try
             {
+                // Buscar tweets recentes com #FURIACS em português
                 var tweets = await _xApiService.GetRecentTweetsAsync("#FURIACS lang:pt");
                 Console.WriteLine($"Tweets recebidos: {tweets?.Count ?? 0}");
-                var result = _analysisService.AnalyzeTweets(tweets);
 
-                if (tweets != null && tweets.Any() && result.TopWords.Any() && result.PostsByDay.Any())
-                {
-                    _cachedResult = result;
-                    _cacheExpiry = DateTime.UtcNow.AddMinutes(5);
-                    Console.WriteLine("Cache atualizado com novo resultado.");
-                    return Ok(result);
-                }
-                else if (_cachedResult != null && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
-                {
-                    Console.WriteLine("Retornando cache devido a tweets inválidos.");
-                    return Ok(_cachedResult);
-                }
-                else
-                {
-                    Console.WriteLine("Nenhum dado válido disponível.");
-                    return Ok(new AnalysisResult
-                    {
-                        TopWords = new Dictionary<string, int>(),
-                        Sentiment = new Sentiment { Positive = 0, Negative = 0, Neutral = 0 },
-                        PostsByDay = new Dictionary<string, int>(),
-                        TopWordsTweets = new Dictionary<string, List<string>>()
-                    });
-                }
+                // Analisar tweets
+                var analysisResult = _fanAnalysisService.AnalyzeTweets(tweets);
+                Console.WriteLine($"Análise concluída: TopWords={analysisResult.TopWords.Count}, Sentiment=[P:{analysisResult.Sentiment.Positive}, N:{analysisResult.Sentiment.Negative}, Neu:{analysisResult.Sentiment.Neutral}]");
+                return Ok(analysisResult);
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
+                return StatusCode(500, new { error = "Erro ao acessar a API do X. Verifique o token de autenticação.", details = ex.Message });
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
-                if (_cachedResult != null && _cachedResult.TopWords.Any() && _cachedResult.PostsByDay.Any())
-                {
-                    Console.WriteLine("Retornando cache devido a erro na API.");
-                    return Ok(_cachedResult);
-                }
-                return StatusCode(500, "Erro ao processar a solicitação.");
+                Console.WriteLine($"Erro ao analisar tweets: {ex.Message}");
+                return StatusCode(500, new { error = "Erro interno ao analisar tweets.", details = ex.Message });
             }
         }
     }

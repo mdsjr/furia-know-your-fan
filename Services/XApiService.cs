@@ -3,27 +3,47 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FuriaKnowYourFan.Models;
 
 namespace FuriaKnowYourFan.Services
 {
     public class XApiService
     {
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
 
-        public XApiService(HttpClient httpClient)
+        public XApiService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
-            _httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer YOUR_X_API_BEARER_TOKEN");
+            _httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
         }
 
         public async Task<List<Tweet>> GetRecentTweetsAsync(string query)
         {
             try
             {
+                var client = _httpClientFactory.CreateClient("XApiClient");
                 var url = $"https://api.x.com/2/tweets/search/recent?query={Uri.EscapeDataString(query)}&max_results=10&tweet.fields=created_at";
-                var response = await _httpClient.GetAsync(url);
-                response.EnsureSuccessStatusCode();
+                Console.WriteLine($"Enviando requisição para: {url}");
+                if (client.DefaultRequestHeaders.Contains("Authorization"))
+                {
+                    Console.WriteLine("Header Authorization presente na requisição.");
+                }
+                else
+                {
+                    Console.WriteLine("Header Authorization NÃO presente na requisição!");
+                }
+
+                var response = await client.GetAsync(url);
+                Console.WriteLine($"Resposta recebida: Status {response.StatusCode}");
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Erro na resposta da API: {errorContent}");
+                    throw new HttpRequestException($"Response status code does not indicate success: {(int)response.StatusCode} ({response.ReasonPhrase}). Detalhes: {errorContent}");
+                }
+
                 var json = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Resposta da API: {json}");
                 var jsonDoc = JsonDocument.Parse(json);
 
                 var tweets = new List<Tweet>();
@@ -40,21 +60,19 @@ namespace FuriaKnowYourFan.Services
                     }
                 }
 
-                Console.WriteLine($"Resposta da API: {json}");
+                Console.WriteLine($"Tweets processados: {tweets.Count}");
                 return tweets;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
                 Console.WriteLine($"Erro ao acessar API do X: {ex.Message}");
                 throw;
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro inesperado ao acessar API do X: {ex.Message}");
+                throw;
+            }
         }
-    }
-
-    public class Tweet
-    {
-        public string Id { get; set; }
-        public string Text { get; set; }
-        public string CreatedAt { get; set; }
     }
 }

@@ -12,6 +12,7 @@
     <div id="root" class="p-4"></div>
     <script type="text/babel">
         const { useState } = React;
+        const { createRoot } = ReactDOM;
 
         const Profile = () => {
             const [formData, setFormData] = useState({
@@ -185,7 +186,8 @@
             );
         };
 
-        ReactDOM.render(<Profile />, document.getElementById('root'));
+        const root = createRoot(document.getElementById('root'));
+        root.render(<Profile />);
     </script>
 </body>
 </html>

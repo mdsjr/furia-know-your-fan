@@ -40,4 +40,5 @@ D:\FuriaKnowYourFan\bin\Debug\net9.0\FuriaKnowYourFan.staticwebassets.runtime.js
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-zjcym4nk1t.gz
+D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-pi2e53p9zg.gz
+D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\0ieuyuj21e-gfb4ipwin9.gz

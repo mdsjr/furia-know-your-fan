@@ -1,35 +1,43 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 using FuriaKnowYourFan.Services;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicionar serviços
-builder.Services.AddControllers().AddNewtonsoftJson();
-builder.Services.AddHttpClient<XApiService>(client =>
+// Adicionar serviços ao contêiner
+builder.Services.AddControllers();
+
+// Configurar HttpClient para XApiService usando IHttpClientFactory
+builder.Services.AddHttpClient("XApiClient", client =>
 {
-    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-}).AddTypedClient<XApiService>((httpClient, sp) =>
-    new XApiService(httpClient, sp.GetRequiredService<IConfiguration>()));
-builder.Services.AddSingleton<FanAnalysisService>();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "FURIA Know Your Fan API", Version = "v1" });
+    var bearerToken = builder.Configuration["XApiBearerToken"];
+    if (string.IsNullOrEmpty(bearerToken))
+    {
+        throw new InvalidOperationException("XApiBearerToken não configurado em appsettings.json. Verifique o arquivo de configuração.");
+    }
+    Console.WriteLine($"Configurando HttpClient com token: {bearerToken.Substring(0, 10)}... (truncado para log)");
+    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
+
+// Registrar serviços
+builder.Services.AddScoped<XApiService>();
+builder.Services.AddSingleton<FanAnalysisService>();
 
 var app = builder.Build();
 
-// Configurar pipeline
-if (app.Environment.IsDevelopment())
+// Configurar o pipeline de requisições
+if (!app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseExceptionHandler("/Error");
+    app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
 app.MapFallbackToFile("index.html");

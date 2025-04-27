@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using FuriaKnowYourFan.Services;
 using System.Threading.Tasks;
+using FuriaKnowYourFan.Models;
 
 namespace FuriaKnowYourFan.Controllers
 {
@@ -22,7 +23,7 @@ namespace FuriaKnowYourFan.Controllers
             {
                 // Simulação: verificar se o usuário segue @FURIA ou interage com #FURIACS
                 var tweets = await _xApiService.GetRecentTweetsAsync($"from:{handle} #FURIACS");
-                var followsFuria = tweets != null && tweets.Any(t => t.Text.ToLower().Contains("@furia"));
+                var followsFuria = tweets != null && tweets.Any(t => t.Text != null && t.Text.ToLower().Contains("@furia"));
 
                 return Ok(new
                 {

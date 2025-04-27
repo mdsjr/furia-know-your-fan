@@ -70,6 +70,8 @@ FuriaKnowYourFan/
 ├── Services/
 │ ├── FanAnalysisService.cs
 │ ├── XApiService.cs
+├── Models/
+│ ├── Tweet.cs
 ├── wwwroot/
 │ ├── images/
 │ │ ├── furia-logo.png

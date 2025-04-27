@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\index.html"
     },
     {
+      "Id": "D:\\FuriaKnowYourFan\\wwwroot\\profile.html",
+      "PackagePath": "staticwebassets\\profile.html"
+    },
+    {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.FuriaKnowYourFan.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
