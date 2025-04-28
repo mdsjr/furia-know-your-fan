@@ -1,0 +1,34 @@
+{
+    "topWords": {
+        "furia": 10,
+        "primeiro": 10,
+        "game": 10,
+        "nova": 10,
+        "furiacs": 10
+    },
+    "sentiment": {
+        "positive": 0,
+        "negative": 0,
+        "neutral": 10
+    },
+    "postsByDay": {
+        "2025-04-27T00:00:00.0000000Z": 10
+    },
+    "topWordsTweets": {
+        "furia": [
+            "RT @FURIA: O primeiro game da nova #FURIACS 🎙️\n\nft @FalleNCS @tvoy_molodoy @kscerato @yek1ndar @yuurih https://t.co/TrwgPm026U"
+        ],
+        "primeiro": [
+            "RT @FURIA: O primeiro game da nova #FURIACS 🎙️\n\nft @FalleNCS @tvoy_molodoy @kscerato @yek1ndar @yuurih https://t.co/TrwgPm026U"
+        ],
+        "game": [
+            "RT @FURIA: O primeiro game da nova #FURIACS 🎙️\n\nft @FalleNCS @tvoy_molodoy @kscerato @yek1ndar @yuurih https://t.co/TrwgPm026U"
+        ],
+        "nova": [
+            "RT @FURIA: O primeiro game da nova #FURIACS 🎙️\n\nft @FalleNCS @tvoy_molodoy @kscerato @yek1ndar @yuurih https://t.co/TrwgPm026U"
+        ],
+        "furiacs": [
+            "RT @FURIA: O primeiro game da nova #FURIACS 🎙️\n\nft @FalleNCS @tvoy_molodoy @kscerato @yek1ndar @yuurih https://t.co/TrwgPm026U"
+        ]
+    }
+}
