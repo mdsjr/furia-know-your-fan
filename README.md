@@ -1,95 +1,115 @@
-FURIA Know Your Fan
-Descrição
-FURIA Know Your Fan é uma aplicação web desenvolvida para o Challenge #2 - Know Your Fan da Trybe. A solução coleta e analisa dados de fãs de esports, com foco na organização FURIA, permitindo:
-
-Coleta de dados pessoais (nome, endereço, CPF, interesses, eventos, compras).
-Upload e validação de documentos (PNG, JPEG, PDF) com simulação de IA.
-Análise de interações no X com #FURIACS, incluindo top palavras, sentimento e posts por dia.
-Validação de perfis do X com simulação de IA.
-
+FuriaKnowYourFan
+FuriaKnowYourFan é uma aplicação web desenvolvida para o Challenge #2 da FURIA, com o objetivo de analisar a base de fãs do time de Counter-Strike (CS) através de dados coletados da API do X. A aplicação exibe análises de tweets com a hashtag #FURIACS, incluindo Top Palavras, Posts por Dia, Sentimento e Tweets associados, além de permitir a validação de perfis de fãs com base em interações com a FURIA.
 Funcionalidades
 
-Análise de Tweets: Exibe gráficos de top palavras, posts por dia, sentimento e tweets associados.
-Perfil do Usuário: Formulário para coleta de dados pessoais e upload de documentos.
-Validação de Perfil: Verifica interações do usuário no X com a FURIA.
-Exportação de Dados: Baixa a análise de tweets como JSON.
-Frontend: Interface com logotipo da FURIA, gráficos interativos e design responsivo.
-Backend: API RESTful com cache de 5 minutos.
+Página Inicial:
+Gráficos interativos com:
+Top Palavras: Palavras mais frequentes nos tweets (ex.: furia, furiacs, primeiro).
+Posts por Dia: Distribuição de tweets por data (ex.: 27/04/2025: 10).
+Sentimento: Análise de sentimento dos tweets (positivo, negativo, neutro).
+Tweets com Top Palavras: Até 3 tweets por palavra-chave.
 
-Tecnologias
+Botão "Exportar Dados" para baixar a análise em formato JSON (furia_analysis.json).
+Navegação para a página de perfil.
 
-Backend: ASP.NET Core, C#
-Frontend: React, Chart.js, Tailwind CSS
-API Externa: X API v2
-Outros: Git, JSON
+Página de Perfil:
+Formulário para cadastro de informações pessoais (nome, endereço, CPF, interesses).
+Upload de arquivos (PNG, JPEG, PDF) com validação.
+Validação de handle do X (ex.: @MoacirDomingos5) com base em interações com #FURIACS ou @FURIA.
+Mensagens de validação (ex.: "Perfil validado com sucesso!" ou "Nenhuma interação encontrada.").
+
+Backend:
+Integração com a API do X para buscar tweets recentes.
+Endpoints:
+GET /api/fan/analyze: Retorna análise de tweets.
+GET /api/profile/validate/{handle}: Valida um handle do X.
+
+Tecnologias Utilizadas
+
+Backend: ASP.NET Core (C#), HttpClient com IHttpClientFactory para chamadas à API do X.
+Frontend: HTML, JavaScript, Tailwind CSS (via CDN), Chart.js para gráficos.
+API: X API v2 (/2/tweets/search/recent) com autenticação via Bearer Token.
+Outros: Git para controle de versão, Postman para testes de API.
+
+Pré-requisitos
+
+.NET 8.0 SDK
+Conta na API do X com Bearer Token (tier gratuito ou superior).
+Navegador moderno (Chrome, Firefox, Edge).
+Postman (opcional, para testes).
 
 Configuração
 
-Pré-requisitos:
+Clone o Repositório:git clone https://github.com/<seu-usuario>/FuriaKnowYourFan.git
+cd FuriaKnowYourFan
 
-.NET 8 SDK
-Chave de API do X (Bearer Token)
-Navegador moderno (Chrome, Firefox)
-
-Instalação:
-git clone https://github.com/seu_usuario/furia-know-your-fan.git
-cd furia-know-your-fan
-
-Configurar API do X:
-
-Crie um arquivo appsettings.json em D:\FuriaKnowYourFan:{
-"XApiBearerToken": "SUA_CHAVE_AQUI"
+Configure o Token da API do X:
+Crie ou edite o arquivo appsettings.json em D:\FuriaKnowYourFan:{
+"XApiBearerToken": "SEU_BEARER_TOKEN_AQUI"
 }
 
-Substitua SUA_CHAVE_AQUI pela sua chave de API do X.
+Substitua SEU_BEARER_TOKEN_AQUI pelo seu token da API do X.
 
-Executar:
+Restaure Dependências:dotnet restore
+
+Executando a Aplicação
+
+Compile e Execute:dotnet build
 dotnet run
 
-Acesse http://localhost:5001 no navegador.
+Acesse a Aplicação:
+Abra http://localhost:5001 no navegador.
 
-Uso
+Funcionalidades:
+Página Inicial: Clique em "Atualizar Dados" para carregar análises. Use "Exportar Dados" para baixar o JSON.
+Página de Perfil: Preencha o formulário, faça upload de um arquivo, e valide um handle (ex.: @MoacirDomingos5).
 
-Análise de Tweets:
+Testes
 
-Na página inicial (/index.html), clique em "Atualizar Dados" para carregar a análise de tweets.
-Veja os gráficos, sentimento e tweets associados.
-Clique em "Exportar Dados" para baixar o JSON.
+Endpoints:
+GET http://localhost:5001/api/fan/analyze: Retorna análise de tweets.
+GET http://localhost:5001/api/profile/validate/MoacirDomingos5: Valida um handle.
 
-Editar Perfil:
+Postman:
+Importe as requisições do arquivo FuriaKnowYourFan.postman_collection.json (se disponível).
+Teste com o token configurado.
 
-Clique em "Editar Perfil" para acessar /profile.html.
-Preencha os dados pessoais, faça upload de um documento e insira seu handle do X.
-Clique em "Validar" para verificar o perfil e "Salvar Perfil" para simular o salvamento.
+Navegador:
+Verifique os gráficos na página inicial.
+Teste a validação de handles na página de perfil.
+
+Limitações
+
+Limite da API do X: O tier gratuito impõe limites de requisições (ex.: 50 por 15 minutos), podendo causar erros 429 (Too Many Requests).
+Frontend: Usa Tailwind CSS via CDN e Babel no navegador, não otimizados para produção.
+Favicon: Erro 404 para favicon.ico (não afeta funcionalidade).
 
 Estrutura do Projeto
 FuriaKnowYourFan/
 ├── Controllers/
 │ ├── FanController.cs
 │ ├── ProfileController.cs
+├── Models/
+│ ├── Tweet.cs
 ├── Services/
 │ ├── FanAnalysisService.cs
 │ ├── XApiService.cs
-├── Models/
-│ ├── Tweet.cs
 ├── wwwroot/
-│ ├── images/
-│ │ ├── furia-logo.png
 │ ├── index.html
 │ ├── profile.html
-├── Properties/
-│ ├── launchSettings.json
 ├── appsettings.json
+├── Program.cs
 ├── README.md
 
-Vídeo de Demonstração
+Vídeo de Apresentação
+Um vídeo de 3 minutos será criado para demonstrar as funcionalidades:
 
-Link para o vídeo de 3 minutos (substituir pelo link após gravação)
+Introdução: Apresentação do projeto e objetivo.
+Página Inicial: Exibição de gráficos e exportação de dados.
+Página de Perfil: Preenchimento do formulário, upload de arquivo, e validação de handle.
+Conclusão: Benefícios e tecnologias utilizadas.
 
-Licença
-MIT License
 Contato
+Para dúvidas ou sugestões, contate Moacir Domingos (moacir@example.com).
 
-Moacir
-Email: seu_email@example.com
-GitHub: github.com/seu_usuario
+Desenvolvido com 💪 para a FURIA! #DIADEFURIA
