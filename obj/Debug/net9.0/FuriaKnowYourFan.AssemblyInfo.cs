@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("FuriaKnowYourFan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fce30c0cf4235ca8a49b508bc306c5f89aca6689")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d4d5923e476df1af2fef3c4f81e810e834e26aa3")]
 [assembly: System.Reflection.AssemblyProductAttribute("FuriaKnowYourFan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FuriaKnowYourFan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
