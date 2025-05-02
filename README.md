@@ -127,5 +127,8 @@ FuriaKnowYourFan/
 ├── README.md  
 
 ```
+**Demo**:  
+https://www.loom.com/share/90c6c671c94b4e2aad279ecd152f10bf?sid=ab462096-7bed-4280-9a97-b52c65db0d60
+
 
 Desenvolvido com 💪 para a FURIA! `#DIADEFURIA`
