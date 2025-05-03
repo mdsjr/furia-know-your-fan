@@ -1,0 +1,6 @@
+@FuriaKnowYourFan_HostAddress = http://localhost:5001
+
+GET {{FuriaKnowYourFan_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
