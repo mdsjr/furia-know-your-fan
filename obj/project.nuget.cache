@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bb5N3yUgt8o=",
+  "dgSpecHash": "+805gbu9uVE=",
   "success": true,
-  "projectFilePath": "D:\\FuriaKnowYourFan\\FuriaKnowYourFan.csproj",
+  "projectFilePath": "C:\\Users\\Junior\\Desktop\\Nova pasta\\furia-know-your-fan\\FuriaKnowYourFan.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Junior\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\9.0.4\\microsoft.aspnetcore.jsonpatch.9.0.4.nupkg.sha512",
     "C:\\Users\\Junior\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\9.0.4\\microsoft.aspnetcore.mvc.newtonsoftjson.9.0.4.nupkg.sha512",
