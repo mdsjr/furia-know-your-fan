@@ -40,5 +40,6 @@ D:\FuriaKnowYourFan\bin\Debug\net9.0\FuriaKnowYourFan.staticwebassets.runtime.js
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\FuriaKnowYourFan\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
-D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-pi2e53p9zg.gz
-D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\0ieuyuj21e-gfb4ipwin9.gz
+D:\FuriaKnowYourFan\bin\Debug\net9.0\GET-5001-api-fan-analyze.json
+D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\gkizq7eouw-mpnlb4p53c.gz
+D:\FuriaKnowYourFan\obj\Debug\net9.0\compressed\0ieuyuj21e-a0z1bp6kdd.gz
